@@ -216,7 +216,7 @@ var home = function(game){}
 			
 			// // game.physics.arcade.overlap(player, pipes3, gameOver, null, this); 
 			
-			game.physics.arcade.overlap(player, reverseObjectImg, setReverseLayout, null, this); 
+			game.physics.arcade.overlap(player, reverseObjects, setReverseLayout, null, this); 
 			
 			game.physics.arcade.overlap(player, building3, gameOver, null, this); 
 			
