@@ -75,11 +75,11 @@ game.state.start("Main");
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
 		gameOverBanner = game.add.sprite((innerWidth/1.5), 130, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/2.75),200,'player');
+		plane = game.add.sprite((innerWidth/2),230,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		startText = game.add.bitmapText((innerWidth/4), 330, "SFComic", "Touch anywhere to start game", 36);
+		startText = game.add.bitmapText((innerWidth/4), 400, "SFComic", "Touch anywhere to start game", 36);
 		
 		game.input.onDown.add(startGame, this);
  }
