@@ -1673,7 +1673,7 @@ var home = function(game){}
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "Touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "touch anywhere to play again", 24);
 		
 		gameOverScore = game.add.bitmapText((innerWidth/2.2), 250, "SFComic", "Your Score: "+score, 36);
 		bestScore = game.add.bitmapText((innerWidth/1.9), 300, "SFComic", "Best Score: "+topScore, 24);
