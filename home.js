@@ -1,7 +1,7 @@
- var innerWidth = window.innerWidth;
- var innerHeight = window.innerHeight;
- var gameRatio = innerWidth/innerHeight;	
-// var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
+var innerWidth = window.innerWidth;
+var innerHeight = window.innerHeight;
+var gameRatio = innerWidth/innerHeight;	
+//var game = new Phaser.Game(Math.ceil(480*gameRatio), 480, Phaser.AUTO);
 
 // Initialize Phaser, and creates a 400x490px game
 // var game = new Phaser.Game(889, 500, Phaser.AUTO, 'gameDiv');
@@ -21,7 +21,11 @@ var audioPlaying;
 var planeAudio;
 var level = 0;
 var scoreAdded = 0;
+var HitAdded = 0;
 var reverseLayout = false;
+var balloonReversed = 0;
+var countBalloon = 0;
+var pauseBackground = false;
 
 var playAudio = function(audioID) {
 	
@@ -83,6 +87,7 @@ var home = function(game){}
 			game.load.image("extraPoints", "assets/extraPoints.png");
 			//game.load.image("pipe2", "assets/brownBalloon.png");
 			game.load.image("explosion", "assets/explosion.png");
+			//game.load.spritesheet('explosionSprite', 'assets/explosionSprite.png', 86, 65, 13);
 		},
 
 		// Fuction called after 'preload' to setup the game 
@@ -237,14 +242,20 @@ var home = function(game){}
    
    function layout(){
 	   if (gameAlive === true){
-		   if (reverseLayout === false){
-			   player.body.gravity.y = 800; 
-			   game.input.onDown.add(jump, this);
+		   if (pauseBackground === false){
+			    if (reverseLayout === false){
+				   player.body.gravity.y = 800; 
+				   game.input.onDown.add(jump, this);
+			   }
+			   else{
+				   player.body.gravity.y = -800; 
+				   game.input.onDown.add(jump, this);
+			   }
 		   }
 		   else{
-			   player.body.gravity.y = -800; 
-			   game.input.onDown.add(jump, this);
+			   player.body.gravity.y = 0; 
 		   }
+		  
 	   }
 	   else{
 		    player.body.gravity.y = 0; 
@@ -254,27 +265,52 @@ var home = function(game){}
    }
    
    function moveBackground(layer2,layer3,layer6){
-	   if (layer2.x < -980){
+	   if (pauseBackground === false){
+		    if (layer2.x < -980){
+				layer2.x = 980;	
+				layer2.x -= 3;
+			}
+			else{
+				layer2.x -= 3;
+			}
+			if (layer3.x < -1000){
+				layer3.x = 1000;	
+				layer3.x -= 2;
+			}
+			else{
+				layer3.x -= 2;
+			}
+			if (layer6.x < -980){
+				layer6.x = 980;	
+				layer6.x -= 1;
+			}
+			else{
+				layer6.x -= 1;
+			}
+	   }
+	  else{
+		   if (layer2.x < -980){
 			layer2.x = 980;	
-			layer2.x -= 3;
+			layer2.x -= 0;
 		}
 		else{
-			layer2.x -= 3;
+			layer2.x -= 0;
 		}
 		if (layer3.x < -1000){
 			layer3.x = 1000;	
-			layer3.x -= 2;
+			layer3.x -= 0;
 		}
 		else{
-			layer3.x -= 2;
+			layer3.x -= 0;
 		}
 		if (layer6.x < -980){
 			layer6.x = 980;	
-			layer6.x -= 1;
+			layer6.x -= 0;
 		}
 		else{
-			layer6.x -= 1;
+			layer6.x -= 0;
 		}
+	  }
 			
    }
    
@@ -311,7 +347,9 @@ var home = function(game){}
 				building6.angle = -180;
 				building6.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
 				building6.body.velocity.x = -200;
-			}				
+			}		
+			player.anchor.setTo(1,0.5);
+			player.scale.y = -1;
 	   }
 	   else{
 		   if (building3.inWorld === true){
@@ -346,34 +384,975 @@ var home = function(game){}
 				building6.allowCollision = { none: false, any: true, up: true, down: true, left: true, right: true };
 				building6.body.velocity.x = -200;
 			}
+			player.anchor.setTo(1,0.5);
+			player.scale.y = 1;
 	   }
    }
    
+   function killPrevBalloon(x,part){
+	   part.kill();
+	   if (x < 800){
+			for (var j = 0; j<part1bs.children.length; j++){
+			   if ((part1as.children[j].x > x - 30) && (part1as.children[j].x < x + 30)){
+				   part1as.children[j].kill();
+			   }
+			   if ((part1bs.children[j].x > x - 30) && (part1bs.children[j].x < x + 30)){
+				   part1bs.children[j].kill();
+			   }
+			   if ((part1cs.children[j].x > x - 30) && (part1cs.children[j].x < x + 30)){
+				   part1cs.children[j].kill();
+			   }
+			   if ((part1ds.children[j].x > x - 30) && (part1ds.children[j].x < x + 30)){
+				   part1ds.children[j].kill();
+			   }
+			   if ((part2as.children[j].x > x - 30) && (part2as.children[j].x < x + 30)){
+				   part2as.children[j].kill();
+			   }
+			   if ((part2bs.children[j].x > x - 30) || (part2bs.children[j].x < x + 30)){
+				   part2bs.children[j].kill();
+			   }
+			   if ((part2cs.children[j].x > x - 30) || (part2cs.children[j].x < x + 30)){
+				   part2cs.children[j].kill();
+			   }
+			   if ((part2ds.children[j].x > x - 30) || (part2ds.children[j].x < x + 30)){
+				   part2ds.children[j].kill();
+			   }
+			   if ((part3s.children[j].x > x - 30) || (part3s.children[j].x < x + 30)){
+				   part3s.children[j].kill();
+			   }
+			   if ((part4as.children[j].x > x - 30) || (part4as.children[j].x < x + 30)){
+				   part4as.children[j].kill();
+			   }
+			   if ((part4bs.children[j].x > x - 30) || (part4bs.children[j].x < x + 30)){
+				   part4bs.children[j].kill();
+			   }
+			   if ((part4cs.children[j].x > x - 30) || (part4cs.children[j].x < x + 30)){
+				   part4cs.children[j].kill();
+			   }
+			   if ((part4ds.children[j].x > x - 30) || (part4ds.children[j].x < x + 30)){
+				   part4ds.children[j].kill();
+			   }
+			   if ((part5as.children[j].x > x - 30) || (part5as.children[j].x < x + 30)){
+				   part5as.children[j].kill();
+			   }
+			   if ((part5bs.children[j].x > x - 30) || (part5bs.children[j].x < x + 30)){
+				   part5bs.children[j].kill();
+			   }
+			   if ((part5cs.children[j].x > x - 30) || (part5cs.children[j].x < x + 30)){
+				   part5cs.children[j].kill();
+			   }
+			   if ((part5ds.children[j].x > x - 30) || (part5ds.children[j].x < x + 30)){
+				   part5ds.children[j].kill();
+			   }
+		   }
+	   }
+	   
+   }
+   
+   function balloonsOnReverse(){
+	   part5ds.forEach(function(part5d){
+				if (part5d.reversed === false){
+					for (var i=0;i<part1as.children.length;i++){
+						if (part1as.children[i].x > 0 && part1as.children[i].x < 989){
+							x = part1as.children[i].x;
+							killPrevBalloon(x,part1as.children[i]);
+							x = part1as.children[i].x + 27;
+							y = part1as.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1bs.children.length;i++){
+						if (part1bs.children[i].x > 0 && part1bs.children[i].x < 989){
+							x = part1bs.children[i].x;
+							killPrevBalloon(x,part1bs.children[i]);
+							x = part1bs.children[i].x + 24;
+							y = part1bs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1cs.children.length;i++){
+						if (part1cs.children[i].x > 0 && part1cs.children[i].x < 989){
+							x = part1cs.children[i].x;
+							killPrevBalloon(x,part1cs.children[i]);
+							x = part1cs.children[i].x + 21;
+							y = part1cs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1ds.children.length;i++){
+						if (part1ds.children[i].x > 0 && part1ds.children[i].x < 989){
+							x = part1ds.children[i].x;
+							killPrevBalloon(x,part1ds.children[i]);
+							x = part1ds.children[i].x + 18;
+							y = part1ds.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2as.children.length;i++){
+						if (part2as.children[i].x > 0 && part2as.children[i].x < 989){
+							x = part2as.children[i].x;
+							killPrevBalloon(x,part2as.children[i]);
+							x = part2as.children[i].x + 15;
+							y = part2as.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2bs.children.length;i++){
+						if (part2bs.children[i].x > 0 && part2bs.children[i].x < 989){
+							x = part2bs.children[i].x;
+							killPrevBalloon(x,part2bs.children[i]);
+							x = part2bs.children[i].x + 12;
+							y = part2bs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2cs.children.length;i++){
+						if (part2cs.children[i].x > 0 && part2cs.children[i].x < 989){
+							x = part2cs.children[i].x;
+							killPrevBalloon(x,part2cs.children[i]);
+							x = part2cs.children[i].x + 9;
+							y = part2cs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2ds.children.length;i++){
+						if (part2ds.children[i].x > 0 && part2ds.children[i].x < 989){
+							x = part2ds.children[i].x;
+							killPrevBalloon(x,part2ds.children[i]);
+							x = part2ds.children[i].x + 6;
+							y = part2ds.children[i].y + 10;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part3s.children.length;i++){
+						if (part3s.children[i].x > 0 && part3s.children[i].x < 989){
+							x = part3s.children[i].x;
+							killPrevBalloon(x,part3s.children[i]);
+							x = part3s.children[i].x;
+							y = part3s.children[i].y;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4as.children.length;i++){
+						if (part4as.children[i].x > 0 && part4as.children[i].x < 989){
+							x = part4as.children[i].x;
+							killPrevBalloon(x,part4as.children[i]);
+							x = part4as.children[i].x - 6;
+							y = part4as.children[i].y + 10;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1bs.children.length;i++){
+						if (part4bs.children[i].x > 0 && part4bs.children[i].x < 989){
+							x = part4bs.children[i].x;
+							killPrevBalloon(x,part4bs.children[i]);
+							x = part4bs.children[i].x -9;
+							y = part4bs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4cs.children.length;i++){
+						if (part4cs.children[i].x > 0 && part4cs.children[i].x < 989){
+							x = part4cs.children[i].x;
+							killPrevBalloon(x,part4cs.children[i]);
+							x = part4cs.children[i].x -12;
+							y = part4cs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4ds.children.length;i++){
+						if (part4ds.children[i].x > 0 && part4ds.children[i].x < 989){
+							x = part4ds.children[i].x;
+							killPrevBalloon(x,part4ds.children[i]);
+							x = part4ds.children[i].x - 15;
+							y = part4ds.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5as.children.length;i++){
+						if (part5as.children[i].x > 0 && part5as.children[i].x < 989){
+							x = part5as.children[i].x;
+							killPrevBalloon(x,part5as.children[i]);
+							x = part5as.children[i].x - 18;
+							y = part5as.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5bs.children.length;i++){
+						if (part5bs.children[i].x > 0 && part5bs.children[i].x < 989){
+							x = part5bs.children[i].x;
+							killPrevBalloon(x,part5bs.children[i]);
+							x = part5bs.children[i].x - 21;
+							y = part5bs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5cs.children.length;i++){
+						if (part5cs.children[i].x > 0 && part5cs.children[i].x < 989){
+							x = part5cs.children[i].x;
+							killPrevBalloon(x,part5cs.children[i]);
+							x = part5cs.children[i].x - 24;
+							y = part5cs.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5ds.children.length;i++){
+						if (part5ds.children[i].x > 0 && part5ds.children[i].x < 989){
+							x = part5ds.children[i].x;
+							killPrevBalloon(x,part5ds.children[i]);
+							x = part5ds.children[i].x - 27;
+							y = part5ds.children[i].y + 12;
+							createBalloonAngle(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setAngleTweenDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setAngleTweenUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+	   });
+   }
+   
+   function balloonsOnNormal(){
+	   part5ds.forEach(function(part5d){
+				if (part5d.reversed === false){
+					for (var i=0;i<part1as.children.length;i++){
+						if (part1as.children[i].x > 0 && part1as.children[i].x < 989){
+							x = part1as.children[i].x;
+							killPrevBalloon(x,part1as.children[i]);
+							x = part1as.children[i].x - 27;
+							y = part1as.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1bs.children.length;i++){
+						if (part1bs.children[i].x > 0 && part1bs.children[i].x < 989){
+							x = part1bs.children[i].x;
+							killPrevBalloon(x,part1bs.children[i]);
+							x = part1bs.children[i].x - 24;
+							y = part1bs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1cs.children.length;i++){
+						if (part1cs.children[i].x > 0 && part1cs.children[i].x < 989){
+							x = part1cs.children[i].x;
+							killPrevBalloon(x,part1cs.children[i]);
+							x = part1cs.children[i].x - 21;
+							y = part1cs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1ds.children.length;i++){
+						if (part1ds.children[i].x > 0 && part1ds.children[i].x < 989){
+							x = part1ds.children[i].x;
+							killPrevBalloon(x,part1ds.children[i]);
+							x = part1ds.children[i].x - 18;
+							y = part1ds.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2as.children.length;i++){
+						if (part2as.children[i].x > 0 && part2as.children[i].x < 989){
+							x = part2as.children[i].x;
+							killPrevBalloon(x,part2as.children[i]);
+							x = part2as.children[i].x - 15;
+							y = part2as.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2bs.children.length;i++){
+						if (part2bs.children[i].x > 0 && part2bs.children[i].x < 989){
+							x = part2bs.children[i].x;
+							killPrevBalloon(x,part2bs.children[i]);
+							x = part2bs.children[i].x - 12;
+							y = part2bs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2cs.children.length;i++){
+						if (part2cs.children[i].x > 0 && part2cs.children[i].x < 989){
+							x = part2cs.children[i].x;
+							killPrevBalloon(x,part2cs.children[i]);
+							x = part2cs.children[i].x - 9;
+							y = part2cs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part2ds.children.length;i++){
+						if (part2ds.children[i].x > 0 && part2ds.children[i].x < 989){
+							x = part2ds.children[i].x;
+							killPrevBalloon(x,part2ds.children[i]);
+							x = part2ds.children[i].x - 6;
+							y = part2ds.children[i].y - 10;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part3s.children.length;i++){
+						if (part3s.children[i].x > 0 && part3s.children[i].x < 989){
+							x = part3s.children[i].x;
+							killPrevBalloon(x,part3s.children[i]);
+							x = part3s.children[i].x;
+							y = part3s.children[i].y;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4as.children.length;i++){
+						if (part4as.children[i].x > 0 && part4as.children[i].x < 989){
+							x = part4as.children[i].x;
+							killPrevBalloon(x,part4as.children[i]);
+							x = part4as.children[i].x + 6;
+							y = part4as.children[i].y - 10;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part1bs.children.length;i++){
+						if (part4bs.children[i].x > 0 && part4bs.children[i].x < 989){
+							x = part4bs.children[i].x;
+							killPrevBalloon(x,part4bs.children[i]);
+							x = part4bs.children[i].x + 9;
+							y = part4bs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4cs.children.length;i++){
+						if (part4cs.children[i].x > 0 && part4cs.children[i].x < 989){
+							x = part4cs.children[i].x;
+							killPrevBalloon(x,part4cs.children[i]);
+							x = part4cs.children[i].x +12;
+							y = part4cs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part4ds.children.length;i++){
+						if (part4ds.children[i].x > 0 && part4ds.children[i].x < 989){
+							x = part4ds.children[i].x;
+							killPrevBalloon(x,part4ds.children[i]);
+							x = part4ds.children[i].x + 15;
+							y = part4ds.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5as.children.length;i++){
+						if (part5as.children[i].x > 0 && part5as.children[i].x < 989){
+							x = part5as.children[i].x;
+							killPrevBalloon(x,part5as.children[i]);
+							x = part5as.children[i].x + 18;
+							y = part5as.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5bs.children.length;i++){
+						if (part5bs.children[i].x > 0 && part5bs.children[i].x < 989){
+							x = part5bs.children[i].x;
+							killPrevBalloon(x,part5bs.children[i]);
+							x = part5bs.children[i].x + 21;
+							y = part5bs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5cs.children.length;i++){
+						if (part5cs.children[i].x > 0 && part5cs.children[i].x < 989){
+							x = part5cs.children[i].x;
+							killPrevBalloon(x,part5cs.children[i]);
+							x = part5cs.children[i].x + 24;
+							y = part5cs.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+				
+				if (part5d.reversed === false){
+					for (var i=0;i<part5ds.children.length;i++){
+						if (part5ds.children[i].x > 0 && part5ds.children[i].x < 989){
+							x = part5ds.children[i].x;
+							killPrevBalloon(x,part5ds.children[i]);
+							x = part5ds.children[i].x + 27;
+							y = part5ds.children[i].y - 12;
+							createBalloon(x,y);
+							part5d.reversed = true;
+							if (part5d.tweenBalloon === true && part5d.down === true){
+								setTweenMoveDown();
+							}
+							else if (part5d.tweenBalloon === true && part5d.down === false){
+								setTweenMoveUp();
+							}
+							setBalloonProperties();
+						}
+					}
+				}
+		   });
+   }
+   
+   function killObstacles(){
+	    // if (building3.inWorld === true){
+			building3.kill();
+		// }
+		// if (building4.inWorld === true){
+			building4.kill();
+		// }
+		// if (building5.inWorld === true){
+			building5.kill();
+		// }
+		// if (building6.inWorld === true){
+			building6.kill();
+		// }
+		for (var ch=0;ch<part1as.children.length;ch++){
+			part1as.children[ch].kill();
+			part1bs.children[ch].kill();
+			part1cs.children[ch].kill();
+			part1ds.children[ch].kill();
+			
+			part2as.children[ch].kill();
+			part2bs.children[ch].kill();
+			part2cs.children[ch].kill();
+			part2ds.children[ch].kill();
+			
+			part3s.children[ch].kill();
+			
+			part4as.children[ch].kill();
+			part4bs.children[ch].kill();
+			part4cs.children[ch].kill();
+			part4ds.children[ch].kill();
+			
+			part5as.children[ch].kill();
+			part5bs.children[ch].kill();
+			part5cs.children[ch].kill();
+			part5ds.children[ch].kill();
+		}
+			// // if(part1a.inWorld == true){
+				// part1a.kill();
+			// // }
+		// },this);
+		// part1bs.forEach(function(part1b){
+			// // if(part1b.inWorld == true){
+				// part1b.kill();
+			// // }
+		// },this);
+		// part1cs.forEach(function(part1c){
+			// // if(part1c.inWorld == true){
+				// part1c.kill();
+			// // }
+		// },this);
+		// part1ds.forEach(function(part1d){
+			// // if(part1d.inWorld == true){
+				// part1d.kill();
+			// // }
+		// },this);
+		
+		// part2as.forEach(function(part2a){
+			// // if(part2a.inWorld == true){
+				// part2a.kill();
+			// // }
+		// },this);
+		// part2bs.forEach(function(part2b){
+			// // if(part2b.inWorld == true){
+				// part2b.kill();
+			// // }
+		// },this);
+		// part2cs.forEach(function(part2c){
+			// // if(part2c.inWorld == true){
+				// part2c.kill();
+			// // }
+		// },this);
+		// part2ds.forEach(function(part2d){
+			// // if(part2d.inWorld == true){
+				// part2d.kill();
+			// // }
+		// },this);
+		
+		// part3s.forEach(function(part3){
+			// // if(part3.inWorld == true){
+				// part3.kill();
+			// // }
+		// },this);
+		
+		// part4as.forEach(function(part4a){
+			// // if(part4a.inWorld == true){
+				// part4a.kill();
+			// // }
+		// },this);
+		// part4bs.forEach(function(part4b){
+			// // if(part4b.inWorld == true){
+				// part4b.kill();
+			// // }
+		// },this);
+		// part4cs.forEach(function(part4c){
+			// // if(part4c.inWorld == true){
+				// part4c.kill();
+			// // }
+		// },this);
+		// part4ds.forEach(function(part4d){
+			// // if(part4d.inWorld == true){
+				// part4d.kill();
+			// // }
+		// },this);
+		
+		// part5as.forEach(function(part5a){
+			// // if(part5a.inWorld == true){
+				// part5a.kill();
+			// // }
+		// },this);
+		// part5bs.forEach(function(part5b){
+			// // if(part5b.inWorld == true){
+				// part5b.kill();
+			// // }
+		// },this);
+		// part5cs.forEach(function(part5c){
+			// // if(part5c.inWorld == true){
+				// part5c.kill();
+			// // }
+		// },this);
+		// part5ds.forEach(function(part5d){
+			// // if(part5d.inWorld == true){
+				// part5d.kill();
+			// // }
+		// },this);
+   }
+   
    function setReverseLayout(){
-	  if (gameAlive === true && reverseObjectImg.hit === true){
-			reverseLayout = !reverseLayout;
+	   if (gameAlive === true && reverseObjectImg.hit === true){
+			changedReverseLayout = !reverseLayout;
+			pauseBackground = true;
+			gameAlive = false;
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
-			setInWorldObjectReverse();
+			killObstacles();
+			//player.angle = -180;
+			reverseText = game.add.text(200,200,"",{
+				font:"bold 16px Arial", fill: "#ffffff" 
+			});
+			if (changedReverseLayout === true){
+				reverseText.text = "Reverse Gravity Enabled"
+				player.anchor.setTo(1,0.5);
+				player.scale.y = -1;
+			}
+			else{
+				reverseText.text = "Reverse Gravity disabled"
+				player.anchor.setTo(1,0.5);
+				player.scale.y = 1;
+			}
+		
+			setTimeout(function(){
+				gameAlive = true;
+				reverseText.text = "";
+				reverseLayout = changedReverseLayout;
+				pauseBackground = false;
+
+				//setInWorldObjectReverse();
+				// if (reverseLayout === true){
+					// balloonsOnReverse();
+				// }
+				// else{
+					// balloonsOnNormal();
+				// }
+			},500);
+			
+			
+			//reverseObjectImg.visible = false;
 		}
+	   
+	   
+	   // if (reverseObjectImg.hit === true){
+	    // if (reverseLayout === true){
+		   // reverseLayout = false;
+	    // }
+	    // else{
+		   // reverseLayout = true;
+	    // }
+			// reverseObjectImg.hit = false;
+			// //reverseObjectImg.visible = false;
+			// reverseObjectImg.destroy();
+		// }
 			
    }
    
    function addReverseObject(){
-		if (gameAlive === true){
+	   if (gameAlive === true){
 			reverseObjectImg = reverseObjects.getFirstDead();
-				
+				reverseObjectImg.visible = true;
 				reverseObjectImg.reset(989,250);
 				
-				//extraPoints.visible = true;
-				var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
+				//reverseObjectImg.visible = true;
+				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 3000);
 				tween.start();
-				
+				// // Set the new position of the points
+				// points.reset(889, 250);
+
+				// // Add velocity to the points to make it move left
+				// points.body.velocity.x = -400; 
+					   
+				// Kill the points when it's no longer visible 
 				reverseObjectImg.checkWorldBounds = true;
 				reverseObjectImg.outOfBoundsKill = true;
 				reverseObjectImg.hit = true;
 	   }
    }
+	   
+		// //reverseObjectImg = reverseObjects.getFirstDead();
+		// //reverseObjectImg.reset(989,250);
+		// reverseObjectImg = game.add.sprite(989,250,'reverseObject');
+		// game.physics.arcade.enable(reverseObjectImg);
+	    // var tween = game.add.tween(reverseObjectImg).to({ x: -200,y: 250}, 3000);
+		// tween.start();
+	    // reverseObjectImg.checkWorldBounds = true;
+	    // reverseObjectImg.outOfBoundsKill = true;
+		// reverseObjectImg.anchor.set(0.5,0.5);
+		// reverseObjectImg.hit = true;
+   // }
    
 	function createBalloonGroup(){
 		part1as = game.add.group();
@@ -457,23 +1436,29 @@ var home = function(game){}
 				if (ran === 1){
 					createBalloon(500,0);
 					setTweenMoveDown();
+					part5d.down = true;
 			    }
 			    else{
 				   createBalloon(500,500);
 				   setTweenMoveUp();
+				   part5d.down = false;
 			    }
 			}
 			else{
 				if (ran === 1){
 					createBalloonAngle(500,0);
 					setAngleTweenDown();
+					part5d.down = true;
 				}
 				else{
 					createBalloonAngle(500,500);
 					setAngleTweenUp();
+					part5d.down = false;
 				}
 			}  
 		   setBalloonProperties();
+		   part5d.tweenBalloon = true;
+		  
 		}
 	}
 	
@@ -649,17 +1634,22 @@ var home = function(game){}
 	// Make the player jump 
     function jump() {
 		if (gameAlive == true){
-			if (reverseLayout === false){
-				// Add a vertical velocity to the player
-				player.body.velocity.y = -250;
+			if (pauseBackground === false){
+				if (reverseLayout === false){
+					// Add a vertical velocity to the player
+					player.body.velocity.y = -250;
+					//blaster.play();
+				}
+				else{
+					// Add a vertical velocity to the player
+				player.body.velocity.y = 250;
 				//blaster.play();
+				}
 			}
 			else{
-				// Add a vertical velocity to the player
-			player.body.velocity.y = 250;
-			//blaster.play();
+				player.body.velocity.y = 0;
 			}
-			
+
 		}
 		else{
 			player.body.velocity.y = 0;
@@ -692,93 +1682,93 @@ var home = function(game){}
 	
 	function stopBalloonMovement(){
 		part1as.forEach(function(part1a){
-			// if(part1a.inWorld == true){
+			if(part1a.inWorld == true){
 				part1a.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part1bs.forEach(function(part1b){
-			// if(part1b.inWorld == true){
+			if(part1b.inWorld == true){
 				part1b.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part1cs.forEach(function(part1c){
-			// if(part1c.inWorld == true){
+			if(part1c.inWorld == true){
 				part1c.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part1ds.forEach(function(part1d){
-			// if(part1d.inWorld == true){
+			if(part1d.inWorld == true){
 				part1d.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		
 		part2as.forEach(function(part2a){
-			// if(part2a.inWorld == true){
+			if(part2a.inWorld == true){
 				part2a.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part2bs.forEach(function(part2b){
-			// if(part2b.inWorld == true){
+			if(part2b.inWorld == true){
 				part2b.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part2cs.forEach(function(part2c){
-			// if(part2c.inWorld == true){
+			if(part2c.inWorld == true){
 				part2c.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part2ds.forEach(function(part2d){
-			// if(part2d.inWorld == true){
+			if(part2d.inWorld == true){
 				part2d.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		
 		part3s.forEach(function(part3){
-			// if(part3.inWorld == true){
+			if(part3.inWorld == true){
 				part3.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		
 		part4as.forEach(function(part4a){
-			// if(part4a.inWorld == true){
+			if(part4a.inWorld == true){
 				part4a.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part4bs.forEach(function(part4b){
-			// if(part4b.inWorld == true){
+			if(part4b.inWorld == true){
 				part4b.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part4cs.forEach(function(part4c){
-			// if(part4c.inWorld == true){
+			if(part4c.inWorld == true){
 				part4c.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part4ds.forEach(function(part4d){
-			// if(part4d.inWorld == true){
+			if(part4d.inWorld == true){
 				part4d.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		
 		part5as.forEach(function(part5a){
-			// if(part5a.inWorld == true){
+			if(part5a.inWorld == true){
 				part5a.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part5bs.forEach(function(part5b){
-			// if(part5b.inWorld == true){
+			if(part5b.inWorld == true){
 				part5b.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part5cs.forEach(function(part5c){
-			// if(part5c.inWorld == true){
+			if(part5c.inWorld == true){
 				part5c.body.velocity.x = 0;
-			// }
+			}
 		},this);
 		part5ds.forEach(function(part5d){
-			// if(part5d.inWorld == true){
+			if(part5d.inWorld == true){
 				part5d.body.velocity.x = 0;
-			// }
+			}
 		},this);
 	}
 	
@@ -849,6 +1839,8 @@ var home = function(game){}
 			}
 			setBalloonProperties();
 			part5d.giveScore = true;
+			part5d.reversed = false;
+			part5d.tweenBalloon = false;
 		}
     }
 	
@@ -1195,6 +2187,16 @@ var home = function(game){}
 		else{
 			scoreAdded = 0;
 		}
+		
+		// if (score%20 === 0){
+			// HitAdded = HitAdded + 1;
+			// if (HitAdded === 1){
+				// addReverseObject();
+			// }
+		// }
+		// else{
+			// HitAdded = 0;
+		// }
 		
 	}
 	

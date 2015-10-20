@@ -21,8 +21,8 @@ var main = function(game){}
 			game.load.image("gameOverBanner", "assets/gameOverBanner.png");
 			game.load.image("transparentOverlay", "assets/gradient.png");
 			game.load.spritesheet("buildingSprites","assets/spritesheet.png",110,233,5);
-			game.load.bitmapFont('SFComic', 'assets/sf-comic_0.png', 'assets/sf comic.fnt');
-			game.load.bitmapFont('Kg', 'assets/kg_0.png', 'assets/kg.fnt');
+			game.load.bitmapFont('SFComic', 'assets/font.png', 'assets/font.fnt');
+			game.load.bitmapFont('Kg', 'assets/Kgfont.png', 'assets/Kgfont.fnt');
 		
 		},
 		create: function() { 
@@ -79,7 +79,7 @@ game.state.start("Main");
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		
-		startText = game.add.bitmapText((innerWidth/3), 330, "SFComic", "Touch anywhere to start game", 36);
+		startText = game.add.bitmapText((innerWidth/4), 330, "SFComic", "Touch anywhere to start game", 36);
 		
 		game.input.onDown.add(startGame, this);
  }
