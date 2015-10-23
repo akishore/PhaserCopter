@@ -48,7 +48,7 @@ var playAudio = function(audioID) {
 		   // // // Play audio
 	 my_media.play();
 	// // $("#Plane").on("ended", playAudio("Plane"));
-}
+} 
 
 
 var home = function(game){}
