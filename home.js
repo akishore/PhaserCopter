@@ -1353,7 +1353,7 @@ var home = function(game){}
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
-				
+				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
@@ -1367,7 +1367,7 @@ var home = function(game){}
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
-				
+				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
 			}
