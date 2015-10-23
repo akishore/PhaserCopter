@@ -90,7 +90,7 @@ game.state.start("Main");
  }
  
 	function planeMoveDown(){
-		var tween = game.add.tween(plane).to( y: 230}, 1000);
+		var tween = game.add.tween(plane).to( {y: 230}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveUp, this);
 	}
