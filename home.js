@@ -1339,34 +1339,45 @@ var home = function(game){}
 			reverseObjectImg.kill();
 			killObstacles();
 			//player.angle = -180;
-			reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
+			//reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
 			/*reverseText = game.add.text(450,200,"",{
 				font:"bold 34px Arial", fill: "#70f0ff" 
 			});*/
 			if (changedReverseLayout === true){
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
 				//reverseText.text = "Gravity Reversed";
-				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-				reverseText.alpha = 0.3
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
-				tween.start();
+				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
+				//reverseText.alpha = 0.3
+				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
+				//tween.start();
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				reverseTextTween.start();
+				
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
 			else{
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
 				//reverseText.text = "Gravity Reversed";
-				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
-				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
-				tween.start();
+				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
+				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
+				//tween.start();
+				
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				reverseTextTween.start();
+				
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
 			}
 		
 			setTimeout(function(){
 				gameAlive = true;
-				reverseText.text = "";
-				reverseText.alpha=0;
+				
+				reverseTextTween = game.add.tween(reverseText).to({alpha: 0 }, 100);
+				reverseTextTween.start();
+				
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
 
@@ -1405,7 +1416,7 @@ var home = function(game){}
 				reverseObjectImg.reset(989,250);
 				
 				//reverseObjectImg.visible = true;
-				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 3000);
+				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 5000);
 				tween.start();
 				// // Set the new position of the points
 				// points.reset(889, 250);
