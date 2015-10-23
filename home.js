@@ -1339,12 +1339,13 @@ var home = function(game){}
 			reverseObjectImg.kill();
 			killObstacles();
 			//player.angle = -180;
-			reverseText = game.add.text(450,200,"",{
+			reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
+			/*reverseText = game.add.text(450,200,"",{
 				font:"bold 34px Arial", fill: "#70f0ff" 
-			});
+			});*/
 			if (changedReverseLayout === true){
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				reverseText.text = "Reverse Gravity Enabled";
+				//reverseText.text = "Gravity Reversed";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
 				reverseText.alpha = 0.3
 				var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
@@ -1354,7 +1355,7 @@ var home = function(game){}
 			}
 			else{
 				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				reverseText.text = "Reverse Gravity disabled";
+				//reverseText.text = "Gravity Reversed";
 				reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
 				var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
 				tween.start();
@@ -1365,6 +1366,7 @@ var home = function(game){}
 			setTimeout(function(){
 				gameAlive = true;
 				reverseText.text = "";
+				reverseText.alpha=0;
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
 
@@ -1743,25 +1745,25 @@ var home = function(game){}
 	
 	function gameOverScreen(){
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
-		gameOverBanner = game.add.sprite((innerWidth/1.5), 100, 'gameOverBanner');
+		gameOverBanner = game.add.sprite((innerWidth/1.4), 100, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/1.5),190,'player');
+		plane = game.add.sprite((innerWidth/1.1),190,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
 		//restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
-		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.2), 430, "SFComic", "touch anywhere to play again", 24);
 		restartText.alpha = 0.3;
 		onCompleteBright();
 
 		//gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
-		gameOverScore = game.add.bitmapText((innerWidth/2.2), 250, "SFComic", "Your Score: "+score, 36);
+		gameOverScore = game.add.bitmapText((innerWidth/1.9), 250, "SFComic", "Your Score: "+score, 36);
 		gameOverScore.alpha = 0.1;
 		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: 250,y: 280, alpha: 1 }, 800);
 		gameOverScoreTween.start();
 		//bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
-		bestScore = game.add.bitmapText((innerWidth/1.9), 300, "SFComic", "Best Score: "+topScore, 24);
+		bestScore = game.add.bitmapText((innerWidth/1.6), 300, "SFComic", "Best Score: "+topScore, 24);
 		bestScore.alpha = 0.1;
 		var bestScoreTween = game.add.tween(bestScore).to({ x: 250,y: 330, alpha: 1 }, 800);
 		bestScoreTween.start();
