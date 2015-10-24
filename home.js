@@ -1350,8 +1350,8 @@ var home = function(game){}
 				//reverseText.alpha = 0.3
 				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
 				//tween.start();
-				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
-				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
@@ -1365,7 +1365,8 @@ var home = function(game){}
 				//tween.start();
 				
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
-				var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
+				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
+				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
@@ -1416,7 +1417,7 @@ var home = function(game){}
 				reverseObjectImg.reset(989,250);
 				
 				//reverseObjectImg.visible = true;
-				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 4000);
+				var tween = game.add.tween(reverseObjectImg).to({ x: -50,y: 250}, 3000);
 				tween.start();
 				// // Set the new position of the points
 				// points.reset(889, 250);
