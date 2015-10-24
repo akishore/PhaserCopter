@@ -61,6 +61,9 @@ var home = function(game){}
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize(true);
 			
+			game.load.image("Nightlayer1", "assets/layer-1_night.png");
+			game.load.image("Eveninglayer1", "assets/layer-1_evening.png");
+			
 			game.load.image("slice1a", "assets/slice1a.png");
 			game.load.image("slice1b", "assets/slice1b.png");
 			game.load.image("slice1c", "assets/slice1c.png");
@@ -92,6 +95,11 @@ var home = function(game){}
 
 		// Fuction called after 'preload' to setup the game 
 		create: function() { 	
+			Nightlayer1 = game.add.sprite(0, 0, 'Nightlayer1');
+			Nightlayer1_dup = game.add.sprite(1000, 0, 'Nightlayer1');
+		
+			Eveninglayer1 = game.add.sprite(0, 0, 'Eveninglayer1');
+			Eveninglayer1_dup = game.add.sprite(1000, 0, 'Eveninglayer1');
 			
 			layer1 = game.add.sprite(0, 0, 'layer1');
 			layer1_dup = game.add.sprite(900, 0, 'layer1');
@@ -160,12 +168,12 @@ var home = function(game){}
 			
 			timer = game.time.events.loop(3967, addFloorsOfBuilding, this);
 			
-			timer = game.time.events.loop(8000, addReverseObject, this);
+			timer = game.time.events.loop(16000, addReverseObject, this);
 			
 			score = 0;
 			functionCalled = 0;
 			
-			//timer = game.time.events.loop(3000, changeBackground, this); 
+			timer = game.time.events.loop(10000, changeBackground, this); 
 			
 			//timer = game.time.events.loop(3000, addObjects, this); 
 			playAudio("Plane");
@@ -238,6 +246,52 @@ var home = function(game){}
 			computeScore();
 			layout();
 		}
+   }
+   
+   function changeBackground(){
+	   if (gameAlive === true){
+			level = level + 1;
+			if (level === 1){
+				var tween = game.add.tween(layer1).to({ alpha:0.3}, 4000);
+				tween.start();
+				var tween = game.add.tween(layer1_dup).to({ alpha:0.3}, 4000);
+				tween.start();
+			}
+			else if (level === 2){
+				var tween = game.add.tween(Eveninglayer1).to({ alpha:0.3}, 2000);
+				tween.start();
+				var tween = game.add.tween(Eveninglayer1_dup).to({ alpha:0.3}, 2000);
+				tween.start();
+			}
+			else if (level === 3){
+				var tween = game.add.tween(Nightlayer1).to({ alpha:0.3}, 3000);
+				tween.start();
+				var tween = game.add.tween(Nightlayer1_dup).to({ alpha:0.3}, 3000);
+				tween.start();
+			}
+			else if (level === 4){
+				var tween = game.add.tween(Nightlayer1).to({ alpha:1}, 3000);
+				tween.start();
+				var tween = game.add.tween(Nightlayer1_dup).to({ alpha:1}, 3000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+			}
+			else if (level === 5){
+				var tween = game.add.tween(Eveninglayer1).to({ alpha:1}, 2000);
+				tween.start();
+				var tween = game.add.tween(Eveninglayer1_dup).to({ alpha:1}, 2000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+			}
+			else if (level === 6){
+				var tween = game.add.tween(layer1).to({ alpha:1}, 4000);
+				tween.start();
+				var tween = game.add.tween(layer1_dup).to({ alpha:1}, 4000);
+				tween.start();
+				//tween.onComplete.add(NightToDawn, this);
+				level = 0;
+			}
+	   }
    }
    
    function layout(){
@@ -1338,36 +1392,21 @@ var home = function(game){}
 			reverseObjectImg.hit = false;
 			reverseObjectImg.kill();
 			killObstacles();
-			//player.angle = -180;
-			//reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 30);
-			/*reverseText = game.add.text(450,200,"",{
-				font:"bold 34px Arial", fill: "#70f0ff" 
-			});*/
 			if (changedReverseLayout === true){
-				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				//reverseText.text = "Gravity Reversed";
-				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.8)', 0);
-				//reverseText.alpha = 0.3
-				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha:1}, 600);
-				//tween.start();
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 48);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				reverseTextTween.start();
+				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = -1;
 			}
 			else{
-				//reverseText = game.add.bitmapText(300, 200, "Kg", "Reverse Gravity Enabled", 30);
-				//reverseText.text = "Gravity Reversed";
-				//reverseText.setShadow(-5, 5, 'rgba(0,0,0,0.5)', 0);
-				//var tween = game.add.tween(reverseText).to({ x: 200,y: 200}, 600);
-				//tween.start();
-				
 				reverseText = game.add.bitmapText(450, 200, "SFComic", "Gravity Reversed", 36);
 				var reverseTextTween = game.add.tween(reverseText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				//var reverseTextTween = game.add.tween(reverseText).to({ x: 200,y: 200, alpha: 1 }, 600);
 				reverseTextTween.start();
+				my_media.release;
 				playAudio("Swoosh");
 				player.anchor.setTo(1,0.5);
 				player.scale.y = 1;
@@ -1381,32 +1420,12 @@ var home = function(game){}
 				
 				reverseLayout = changedReverseLayout;
 				pauseBackground = false;
+				my_media.release;
+				playAudio("plane");
 
-				//setInWorldObjectReverse();
-				// if (reverseLayout === true){
-					// balloonsOnReverse();
-				// }
-				// else{
-					// balloonsOnNormal();
-				// }
 			},2000);
 			
-			
-			//reverseObjectImg.visible = false;
 		}
-	   
-	   
-	   // if (reverseObjectImg.hit === true){
-	    // if (reverseLayout === true){
-		   // reverseLayout = false;
-	    // }
-	    // else{
-		   // reverseLayout = true;
-	    // }
-			// reverseObjectImg.hit = false;
-			// //reverseObjectImg.visible = false;
-			// reverseObjectImg.destroy();
-		// }
 			
    }
    
@@ -1750,6 +1769,7 @@ var home = function(game){}
 	
 	function restart() {
 		//my_media.pause();
+		level = 0;
 		gameAlive = true;
 		skip = 0;
 		game.state.start("Home",true,false);	
@@ -1929,7 +1949,7 @@ var home = function(game){}
 		buildingWidth = building3.width/3;
 		
 		if (reverseLayout === true){
-			if (part3s.children[0].x < 360 && part3s.children[0].x > 200){
+			if (part3s.children[0].x < 360 && part3s.children[0].x > 230){
 				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x, player.y-18, 'explosion');
 				}
@@ -1944,11 +1964,11 @@ var home = function(game){}
 				}
 			}
 			else{
-				if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
-					explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
+				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
 				}
-				else if (building3.x-buildingWidth < player.x || building4.x-buildingWidth < player.x || building5.x-buildingWidth < player.x || building6.x-buildingWidth < player.x){
-					explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
+				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+					explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
 				}
 				else{
 					explosion = game.add.sprite(player.x-40, player.y - 18, 'explosion');
@@ -1958,7 +1978,7 @@ var home = function(game){}
 			
 		}
 		else{
-			if (part3s.children[0].x < 360 && part3s.children[0].x >200){
+			if (part3s.children[0].x < 360 && part3s.children[0].x >230){
 				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 				}
@@ -1973,13 +1993,12 @@ var home = function(game){}
 				}
 			}
 			else{
-				if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
+				}
+				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
 					explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
 				}
-				else if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
-					explosion = game.add.sprite(player.x-30, player.y - 18, 'explosion');
-				}
-				
 				else{
 					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
 				}
