@@ -1899,7 +1899,7 @@ var play = function(game){}
 		planeMoveDown();
 		
 		//restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
-		restartText = game.add.bitmapText((innerWidth/2.4), 430, "SFComic", "touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.3), 430, "SFComic", "touch anywhere to play again", 24);
 		restartText.alpha = 0.3;
 		onCompleteBright();
 
