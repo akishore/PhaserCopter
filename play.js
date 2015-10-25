@@ -1892,25 +1892,25 @@ var play = function(game){}
 		transparentOverlay = game.add.tileSprite(0,0,1500,1000,'transparentOverlay');
 		gameOverBanner = game.add.sprite((innerWidth/1.5), 100, 'gameOverBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
-		plane = game.add.sprite((innerWidth/1.5),190,'player');
+		plane = game.add.sprite((innerWidth/1.5),185,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
 		//restartText = game.add.bitmapText(250, 430, "SFComic", "Touch anywhere to play again", 24);
-		restartText = game.add.bitmapText((innerWidth/2.5), 430, "SFComic", "touch anywhere to play again", 24);
+		restartText = game.add.bitmapText((innerWidth/2.2), 430, "SFComic", "touch anywhere to play again", 24);
 		restartText.alpha = 0.3;
 		onCompleteBright();
 
 		//gameOverScore = game.add.bitmapText(50, 280, "Kg", "Your Score: "+score, 36);
 		gameOverScore = game.add.bitmapText(50, 280, "SFComic", "Your Score: "+score, 36);
 		gameOverScore.alpha = 0.1;
-		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: (innerWidth/2.2),y: 280, alpha: 1 }, 800);
+		var gameOverScoreTween = game.add.tween(gameOverScore).to({ x: (innerWidth/2.3),y: 280, alpha: 1 }, 800);
 		gameOverScoreTween.start();
 		//bestScore = game.add.bitmapText(450, 330, "Kg", "Best Score: "+topScore, 24);
 		bestScore = game.add.bitmapText(450, 330, "SFComic", "Best Score: "+topScore, 24);
 		bestScore.alpha = 0.1;
-		var bestScoreTween = game.add.tween(bestScore).to({ x: (innerWidth/1.9),y: 330, alpha: 1 }, 800);
+		var bestScoreTween = game.add.tween(bestScore).to({ x: (innerWidth/2),y: 330, alpha: 1 }, 800);
 		bestScoreTween.start();
 		game.input.onDown.add(restart, this);
 	}
@@ -1922,7 +1922,7 @@ var play = function(game){}
 	}
 	
 	function planeMoveUp(){
-		var tween = game.add.tween(plane).to( { y: 170}, 1000);
+		var tween = game.add.tween(plane).to( { y: 160}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveDown, this);
 	}
