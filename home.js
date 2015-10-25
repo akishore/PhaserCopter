@@ -101,13 +101,13 @@ game.state.start("Home");
 		gameOverBanner = game.add.sprite((innerWidth/1.4), 130, 'gameStartBanner');
 		gameOverBanner.anchor.set(0.5,0.5);
 		//plane = game.add.sprite((innerWidth/2.75),200,'player');
-		plane = game.add.sprite((innerWidth/1.5),190,'player');
+		plane = game.add.sprite((innerWidth/1.5),210,'player');
 		plane.width = 80;
 		plane.anchor.set(0.5,0.5);
 		planeMoveDown();
 		
 		//startText = game.add.bitmapText((innerWidth/4), 430, "SFComic", "Touch anywhere to start game", 36);
-		startText = game.add.bitmapText((innerWidth/3.20), 400, "SFComic", "touch anywhere to start game", 36);
+		startText = game.add.bitmapText((innerWidth/3), 400, "SFComic", "touch anywhere to start game", 36);
 		startText.alpha = 0.3;
 		onCompleteRight();
 		
@@ -115,13 +115,13 @@ game.state.start("Home");
  }
  
 	function planeMoveDown(){
-		var tween = game.add.tween(plane).to( {y: 230}, 1000);
+		var tween = game.add.tween(plane).to( {y: 240}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveUp, this);
 	}
 	
 	function planeMoveUp(){
-		var tween = game.add.tween(plane).to( { y: 200}, 1000);
+		var tween = game.add.tween(plane).to( { y: 190}, 1000);
 		tween.start();
 		tween.onComplete.add(planeMoveDown, this);
 	}

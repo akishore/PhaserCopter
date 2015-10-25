@@ -1880,6 +1880,7 @@ var play = function(game){}
     }
 	
 	function restart() {
+		killObstacles();
 		//my_media.pause();
 		playAudio("bgmusic");
 		level = 0;
