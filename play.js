@@ -185,6 +185,7 @@ var play = function(game){}
 			score = 0;
 			functionCalled = 0;
 			checkSlices = 0;
+			collidedIndex = -1;
 			
 			timer = game.time.events.loop(10000, changeBackground, this); 
 			
