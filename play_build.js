@@ -184,7 +184,6 @@ var play = function(game){}
 			
 			score = 0;
 			functionCalled = 0;
-			checkSlices = 0;
 			
 			timer = game.time.events.loop(10000, changeBackground, this); 
 			
@@ -1300,34 +1299,195 @@ var play = function(game){}
    }
    
    function killObstacles(){
-		building3.kill();
-		building4.kill();
-		building5.kill();
-		building6.kill();
-
-		for (var i=0; i<15; i++){
-			part1as.children[i].kill();
-			part1bs.children[i].kill();
-			part1cs.children[i].kill();
-			part1ds.children[i].kill();
-			
-			part2as.children[i].kill();
-			part2bs.children[i].kill();
-			part2cs.children[i].kill();
-			part2ds.children[i].kill();
-			
-			part3s.children[i].kill();
-			
-			part4as.children[i].kill();
-			part4bs.children[i].kill();
-			part4cs.children[i].kill();
-			part4ds.children[i].kill();
-			
-			part5as.children[i].kill();
-			part5bs.children[i].kill();
-			part5cs.children[i].kill();
-			part5ds.children[i].kill();
+	    if (building3.inWorld === true){
+			building3.kill();
 		}
+		if (building4.inWorld === true){
+			building4.kill();
+		}
+		if (building5.inWorld === true){
+			building5.kill();
+		}
+		if (building6.inWorld === true){
+			building6.kill();
+		}
+		part1as.forEach(function(part1a){
+		// if(part1a.inWorld == true){
+			part1a.kill();
+		// }
+		}, this, false);
+		part1bs.forEach(function(part1b){
+			// if(part1b.inWorld == true){
+				part1b.kill();
+			// }
+		}, this, false);
+		part1cs.forEach(function(part1c){
+			// if(part1c.inWorld == true){
+				part1c.kill();
+			// }
+		}, this, false);
+		part1ds.forEach(function(part1d){
+			// if(part1d.inWorld == true){
+				part1d.kill();
+			// }
+		}, this, false);
+		
+		part2as.forEach(function(part2a){
+			// if(part2a.inWorld == true){
+				part2a.kill();
+			// }
+		}, this, false);
+		part2bs.forEach(function(part2b){
+			// if(part2b.inWorld == true){
+				part2b.kill();
+			// }
+		}, this, false);
+		part2cs.forEach(function(part2c){
+			// if(part2c.inWorld == true){
+				part2c.kill();
+			// }
+		}, this, false);
+		part2ds.forEach(function(part2d){
+			// if(part2d.inWorld == true){
+				part2d.kill();
+			// }
+		}, this, false);
+		
+		part3s.forEach(function(part3){
+			// if(part3.inWorld == true){
+				part3.kill();
+			// }
+		}, this, false);
+		
+		part4as.forEach(function(part4a){
+			// if(part4a.inWorld == true){
+				part4a.kill();
+			// }
+		}, this, false);
+		part4bs.forEach(function(part4b){
+			// if(part4b.inWorld == true){
+				part4b.kill();
+			// }
+		}, this, false);
+		part4cs.forEach(function(part4c){
+			// if(part4c.inWorld == true){
+				part4c.kill();
+			// }
+		}, this, false);
+		part4ds.forEach(function(part4d){
+			// if(part4d.inWorld == true){
+				part4d.kill();
+			// }
+		}, this, false);
+		
+		part5as.forEach(function(part5a){
+			// if(part5a.inWorld == true){
+				part5a.kill();
+			// }
+		}, this, false);
+		part5bs.forEach(function(part5b){
+			// if(part5b.inWorld == true){
+				part5b.kill();
+			// }
+		}, this, false);
+		part5cs.forEach(function(part5c){
+			// if(part5c.inWorld == true){
+				part5c.kill();
+			// }
+		}, this, false);
+		part5ds.forEach(function(part5d){
+			// if(part5d.inWorld == true){
+				part5d.kill();
+			// }
+		}, this, false);
+		// // if(part1a.inWorld == true){
+				// part1a.kill();
+			// // }
+		// },this);
+		// part1bs.forEach(function(part1b){
+			// // if(part1b.inWorld == true){
+				// part1b.kill();
+			// // }
+		// },this);
+		// part1cs.forEach(function(part1c){
+			// // if(part1c.inWorld == true){
+				// part1c.kill();
+			// // }
+		// },this);
+		// part1ds.forEach(function(part1d){
+			// // if(part1d.inWorld == true){
+				// part1d.kill();
+			// // }
+		// },this);
+		
+		// part2as.forEach(function(part2a){
+			// // if(part2a.inWorld == true){
+				// part2a.kill();
+			// // }
+		// },this);
+		// part2bs.forEach(function(part2b){
+			// // if(part2b.inWorld == true){
+				// part2b.kill();
+			// // }
+		// },this);
+		// part2cs.forEach(function(part2c){
+			// // if(part2c.inWorld == true){
+				// part2c.kill();
+			// // }
+		// },this);
+		// part2ds.forEach(function(part2d){
+			// // if(part2d.inWorld == true){
+				// part2d.kill();
+			// // }
+		// },this);
+		
+		// part3s.forEach(function(part3){
+			// // if(part3.inWorld == true){
+				// part3.kill();
+			// // }
+		// },this);
+		
+		// part4as.forEach(function(part4a){
+			// // if(part4a.inWorld == true){
+				// part4a.kill();
+			// // }
+		// },this);
+		// part4bs.forEach(function(part4b){
+			// // if(part4b.inWorld == true){
+				// part4b.kill();
+			// // }
+		// },this);
+		// part4cs.forEach(function(part4c){
+			// // if(part4c.inWorld == true){
+				// part4c.kill();
+			// // }
+		// },this);
+		// part4ds.forEach(function(part4d){
+			// // if(part4d.inWorld == true){
+				// part4d.kill();
+			// // }
+		// },this);
+		
+		// part5as.forEach(function(part5a){
+			// // if(part5a.inWorld == true){
+				// part5a.kill();
+			// // }
+		// },this);
+		// part5bs.forEach(function(part5b){
+			// // if(part5b.inWorld == true){
+				// part5b.kill();
+			// // }
+		// },this);
+		// part5cs.forEach(function(part5c){
+			// // if(part5c.inWorld == true){
+				// part5c.kill();
+			// // }
+		// },this);
+		// part5ds.forEach(function(part5d){
+			// // if(part5d.inWorld == true){
+				// part5d.kill();
+			// // }
+		// },this);
    }
    
    function setReverseLayout(){
@@ -1491,144 +1651,35 @@ var play = function(game){}
 			var balloonType = Math.floor(Math.random()*3)+1;
 			
 			getFirstDeadPart();
-			checkSlices = checkSlices + 1;
-			if (reverseLayout === true){
-				if (checkSlices > 4 && ran === 2)
-				{
-					createBalloonAngle(500,500);
-					setAngleTweenUp();
-					part5d.down = false;
-				}
-				else{
-					createBalloonAngle(500,0);
-					setAngleTweenDown();
-					part5d.down = true;
-					
-				}
-			}
-			else{
+			
+			if (reverseLayout === false){
 				if (ran === 1){
 					createBalloon(500,0);
 					setTweenMoveDown();
 					part5d.down = true;
-					checkSlices = 0;
 			    }
 			    else{
 				   createBalloon(500,500);
 				   setTweenMoveUp();
 				   part5d.down = false;
-				   checkSlices = 0;
 			    }
 			}
-
-		   setBalloonPropertiesTween();
+			else{
+				if (ran === 1){
+					createBalloonAngle(500,0);
+					setAngleTweenDown();
+					part5d.down = true;
+				}
+				else{
+					createBalloonAngle(500,500);
+					setAngleTweenUp();
+					part5d.down = false;
+				}
+			}  
+		   setBalloonProperties();
 		   part5d.tweenBalloon = true;
 		  
 		}
-	}
-	
-	function setBalloonPropertiesTween(){
-		// part1a.body.velocity.x = -200; 
-        part1a.checkWorldBounds = true;
-        part1a.outOfBoundsKill = true;
-		part1a.anchor.set(0.5,0.5);
-		part1a.visible = true;
-		
-		// part1b.body.velocity.x = -200; 
-        part1b.checkWorldBounds = true;
-        part1b.outOfBoundsKill = true;
-		part1b.anchor.set(0.5,0.5);
-		part1b.visible = true;
-		
-		// part1c.body.velocity.x = -200; 
-        part1c.checkWorldBounds = true;
-        part1c.outOfBoundsKill = true;
-		part1c.anchor.set(0.5,0.5);
-		part1c.visible = true;
-		
-		// part1d.body.velocity.x = -200; 
-        part1d.checkWorldBounds = true;
-        part1d.outOfBoundsKill = true;
-		part1d.anchor.set(0.5,0.5);
-		part1d.visible = true;
-		
-		// part2a.body.velocity.x = -200; 
-        part2a.checkWorldBounds = true;
-        part2a.outOfBoundsKill = true;
-		part2a.anchor.set(0.5,0.5);
-		part2a.visible = true;
-		
-		// part2b.body.velocity.x = -200; 
-        part2b.checkWorldBounds = true;
-        part2b.outOfBoundsKill = true;
-		part2b.anchor.set(0.5,0.5);
-		part2b.visible = true;
-		
-		// part2c.body.velocity.x = -200; 
-        part2c.checkWorldBounds = true;
-        part2c.outOfBoundsKill = true;
-		part2c.anchor.set(0.5,0.5);
-		part2c.visible = true;
-		
-		// part2d.body.velocity.x = -200; 
-        part2d.checkWorldBounds = true;
-        part2d.outOfBoundsKill = true;
-		part2d.anchor.set(0.5,0.5);
-		part2d.visible = true;
-		
-		// part3.body.velocity.x = -200; 
-        part3.checkWorldBounds = true;
-        part3.outOfBoundsKill = true;
-		part3.anchor.set(0.5,0.5);
-		part3.visible = true;
-		
-		// part4a.body.velocity.x = -200; 
-        part4a.checkWorldBounds = true;
-        part4a.outOfBoundsKill = true;
-		part4a.anchor.set(0.5,0.5);
-		part4a.visible = true;
-		
-		// part4b.body.velocity.x = -200; 
-        part4b.checkWorldBounds = true;
-        part4b.outOfBoundsKill = true;
-		part4b.anchor.set(0.5,0.5);
-		part4b.visible = true;
-		
-		// part4c.body.velocity.x = -200; 
-        part4c.checkWorldBounds = true;
-        part4c.outOfBoundsKill = true;
-		part4c.anchor.set(0.5,0.5);
-		part4c.visible = true;
-		
-		// part4d.body.velocity.x = -200; 
-        part4d.checkWorldBounds = true;
-        part4d.outOfBoundsKill = true;
-		part4d.anchor.set(0.5,0.5);
-		part4d.visible = true;
-		
-		// part5a.body.velocity.x = -200; 
-        part5a.checkWorldBounds = true;
-        part5a.outOfBoundsKill = true;
-		part5a.anchor.set(0.5,0.5);
-		part5a.visible = true;
-		
-		// part5b.body.velocity.x = -200; 
-        part5b.checkWorldBounds = true;
-        part5b.outOfBoundsKill = true;
-		part5b.anchor.set(0.5,0.5);
-		part5b.visible = true;
-		
-		// part5c.body.velocity.x = -200; 
-        part5c.checkWorldBounds = true;
-        part5c.outOfBoundsKill = true;
-		part5c.anchor.set(0.5,0.5);
-		part5c.visible = true;
-		
-		// part5d.body.velocity.x = -200; 
-        part5d.checkWorldBounds = true;
-        part5d.outOfBoundsKill = true;
-		part5d.anchor.set(0.5,0.5);
-		part5d.visible = true;
 	}
 	
 	function setAngleTweenDown(){
@@ -1982,46 +2033,47 @@ var play = function(game){}
 	}
 	
 	function gameOver() {
+		my_media.pause();
 		gameAlive = false;
 		
 		skip = 0;
 		localStorage.setItem("topScore",Math.max(score,topScore));	
 		functionCalled = functionCalled+1;
-		
 		if (functionCalled === 1){
-			my_media.pause();
 			playAudio("Collision")
 		
 		stopBalloonMovement();
 		
+		if (building3.inWorld === true){
 			building3.body.velocity.x = 0;
+		}
+		if (building4.inWorld === true){
 			building4.body.velocity.x = 0;
+		}
+		if (building5.inWorld === true){
 			building5.body.velocity.x = 0;
+		}
+		if (building6.inWorld === true){
 			building6.body.velocity.x = 0;
+		}
 		
 		player.body.velocity.y = 0;
 		player.body.gravity.y = 0; 
 		
 		buildingWidth = building3.width/3;
 		
-		for (var i=0; i<15; i++){
-			if (part3s.children[i].x < 360 && part3s.children[i].x > 230){
-				collidedIndex = i;
-			}
-		}
-		
 		if (reverseLayout === true){
-			if (collidedIndex >= 0 && collidedIndex < 15){
-				if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x > player.x){
+			if (part3s.children[0].x < 360 && part3s.children[0].x > 230){
+				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x, player.y-18, 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x > player.x){
+				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x, player.y+18 , 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x < player.x){
+				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
 					explosion = game.add.sprite(player.x-40, player.y -18, 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x < player.x){
+				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
 					explosion = game.add.sprite(player.x-40, player.y +18, 'explosion');
 				}
 			}
@@ -2040,18 +2092,18 @@ var play = function(game){}
 			
 		}
 		else{
-			if (collidedIndex >= 0 && collidedIndex < 15){
-				if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x > player.x){
+			if (part3s.children[0].x < 360 && part3s.children[0].x >230){
+				if (part3s.children[0].y < player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x+40, player.y, 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x > player.x){
+				else if (part3s.children[0].y > player.y && part3s.children[0].x > player.x){
 					explosion = game.add.sprite(player.x + 40, player.y , 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y < player.y && part3s.children[collidedIndex].x < player.x){
-					explosion = game.add.sprite(player.x-40, player.y , 'explosion');
+				else if (part3s.children[0].y < player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x, player.y , 'explosion');
 				}
-				else if (part3s.children[collidedIndex].y > player.y && part3s.children[collidedIndex].x < player.x){
-					explosion = game.add.sprite(player.x-40, player.y , 'explosion');
+				else if (part3s.children[0].y > player.y && part3s.children[0].x < player.x){
+					explosion = game.add.sprite(player.x+40, player.y , 'explosion');
 				}
 			}
 			else{
@@ -2115,251 +2167,194 @@ var play = function(game){}
 	function createBalloonAngle(x,y){
 		part1a.reset((x+27), (y+12));
 		part1a.angle = 180;
-		part1a.visible = true;
 		part1b.reset((x+24), (y+12));
 		part1b.angle = 180;
-		part1b.visible = true;
 		part1c.reset((x+21), (y+12));
 		part1c.angle = 180;
-		part1c.visible = true;
 		part1d.reset((x+18), (y+12));
 		part1d.angle = 180;
-		part1d.visible = true;
 		
 		part2a.reset((x+15), (y+12));
 		part2a.angle = 180;
-		part2a.visible = true;
 		part2b.reset((x+12), (y+12));
 		part2b.angle = 180;
-		part2b.visible = true;
 		part2c.reset((x+9), (y+12));
 		part2c.angle = 180;
-		part2c.visible = true;
 		part2d.reset((x+6), (y+10));
 		part2d.angle = 180;
-		part2d.visible = true;
 		
 		part3.reset(x, y);
 		part3.angle = 180;
-		part3.visible = true;
 		
 		part4a.reset((x-6), (y+10));
 		part4a.angle = 180;
-		part4a.visible = true;
 		part4b.reset((x-9), (y+12));
 		part4b.angle = 180;
-		part4b.visible = true;
 		part4c.reset((x-12), (y+12));
 		part4c.angle = 180;
-		part4c.visible = true;
 		part4d.reset((x-15), (y+12));
 		part4d.angle = 180;
-		part4d.visible = true;
 		
 		part5a.reset((x-18), (y+12));
 		part5a.angle = 180;
-		part5a.visible = true;
 		part5b.reset((x-21), (y+12));
 		part5b.angle = 180;
-		part5b.visible = true;
 		part5c.reset((x-24), (y+12));
 		part5c.angle = 180;
-		part5c.visible = true;
 		part5d.reset((x-27), (y+12));
 		part5d.angle = 180;
-		part5d.visible = true;
 	}
 	
 	function getFirstDeadPart(){
 		part1a = part1as.getFirstDead();
-		for (var i=0; i<15;i++){
-			if (part1as.children[i].x === part1a.x && part1as.children[i].y === part1a.y){
-				index = i;
-			}
-		}
-		part1a = part1as.children[index];
-		part1b = part1bs.children[index];
-		part1c = part1cs.children[index];
-		part1d = part1ds.children[index];
+		part1b = part1bs.getFirstDead();
+		part1c = part1cs.getFirstDead();
+		part1d = part1ds.getFirstDead();
 		
-		part2a = part2as.children[index];
-		part2b = part2bs.children[index];
-		part2c = part2cs.children[index];
-		part2d = part2ds.children[index];
+		part2a = part2as.getFirstDead();
+		part2b = part2bs.getFirstDead();
+		part2c = part2cs.getFirstDead();
+		part2d = part2ds.getFirstDead();
 		
-		part3 = part3s.children[index];
+		part3 = part3s.getFirstDead();
 		
-		part4a = part4as.children[index];
-		part4b = part4bs.children[index];
-		part4c = part4cs.children[index];
-		part4d = part4ds.children[index];
+		part4a = part4as.getFirstDead();
+		part4b = part4bs.getFirstDead();
+		part4c = part4cs.getFirstDead();
+		part4d = part4ds.getFirstDead();
 		
-		part5a = part5as.children[index];
-		part5b = part5bs.children[index];
-		part5c = part5cs.children[index];
-		part5d = part5ds.children[index];
+		part5a = part5as.getFirstDead();
+		part5b = part5bs.getFirstDead();
+		part5c = part5cs.getFirstDead();
+		part5d = part5ds.getFirstDead();
 	}
 	
 	function createBalloon(x,y){
 		part1a.reset((x-27), (y-12));
 		part1a.angle = 0;
-		part1a.visible = true;
 		part1b.reset((x-24), (y-12));
 		part1b.angle = 0;
-		part1b.visible = true;
 		part1c.reset((x-21), (y-12));
 		part1c.angle = 0;
-		part1c.visible = true;
 		part1d.reset((x-18), (y-12));
 		part1d.angle = 0;
-		part1d.visible = true;
 		
 		part2a.reset((x-15), (y-12));
 		part2a.angle = 0;
-		part2a.visible = true;
 		part2b.reset((x-12), (y-12));
 		part2b.angle = 0;
-		part2b.visible = true;
 		part2c.reset((x-9), (y-12));
 		part2c.angle = 0;
-		part2c.visible = true;
 		part2d.reset((x-6), y-10);
 		part2d.angle = 0;
-		part2d.visible = true;
 		
 		part3.reset(x, y);
 		part3.angle = 0;
-		part3.visible = true;
 		
 		part4a.reset((x+6), y-10);
 		part4a.angle = 0;
-		part4a.visible = true;
 		part4b.reset((x+9), (y-12));
 		part4b.angle = 0;
-		part4b.visible = true;
 		part4c.reset((x+12), (y-12));
 		part4c.angle = 0;
-		part4c.visible = true;
 		part4d.reset((x+15), (y-12));
 		part4d.angle = 0;
-		part4d.visible = true;
 		
 		part5a.reset((x+18), (y-12));
 		part5a.angle = 0;
-		part5a.visible = true;
 		part5b.reset((x+21), (y-12));
 		part5b.angle = 0;
-		part5b.visible = true;
 		part5c.reset((x+24), (y-12));
 		part5c.angle = 0;
-		part5c.visible = true;
 		part5d.reset((x+27), (y-12));
 		part5d.angle = 0;
-		part5d.visible = true;
 	}
 	
 	function setBalloonProperties(){
 		part1a.body.velocity.x = -200; 
-		part1a.anchor.set(0.5,0.5);
-		part1a.visible = true;
-		part1a.checkWorldBounds = true;
+        part1a.checkWorldBounds = true;
         part1a.outOfBoundsKill = true;
+		part1a.anchor.set(0.5,0.5);
 		
 		part1b.body.velocity.x = -200; 
-		part1b.anchor.set(0.5,0.5);
-		part1b.visible = true;
-		part1b.checkWorldBounds = true;
+        part1b.checkWorldBounds = true;
         part1b.outOfBoundsKill = true;
+		part1b.anchor.set(0.5,0.5);
 		
 		part1c.body.velocity.x = -200; 
-		part1c.anchor.set(0.5,0.5);
-		part1c.visible = true;
-		part1c.checkWorldBounds = true;
+        part1c.checkWorldBounds = true;
         part1c.outOfBoundsKill = true;
+		part1c.anchor.set(0.5,0.5);
 		
 		part1d.body.velocity.x = -200; 
-		part1d.anchor.set(0.5,0.5);
-		part1d.visible = true;
-		part1d.checkWorldBounds = true;
+        part1d.checkWorldBounds = true;
         part1d.outOfBoundsKill = true;
+		part1d.anchor.set(0.5,0.5);
 		
 		part2a.body.velocity.x = -200; 
-		part2a.anchor.set(0.5,0.5);
-		part2a.visible = true;
-		part2a.checkWorldBounds = true;
+        part2a.checkWorldBounds = true;
         part2a.outOfBoundsKill = true;
+		part2a.anchor.set(0.5,0.5);
 		
 		part2b.body.velocity.x = -200; 
-		part2b.anchor.set(0.5,0.5);
-		part2b.visible = true;
-		part2b.checkWorldBounds = true;
+        part2b.checkWorldBounds = true;
         part2b.outOfBoundsKill = true;
+		part2b.anchor.set(0.5,0.5);
 		
 		part2c.body.velocity.x = -200; 
-		part2c.anchor.set(0.5,0.5);
-		part2c.visible = true;
-		part2c.checkWorldBounds = true;
+        part2c.checkWorldBounds = true;
         part2c.outOfBoundsKill = true;
+		part2c.anchor.set(0.5,0.5);
 		
 		part2d.body.velocity.x = -200; 
         part2d.checkWorldBounds = true;
         part2d.outOfBoundsKill = true;
 		part2d.anchor.set(0.5,0.5);
-		part2d.visible = true;
 		
 		part3.body.velocity.x = -200; 
         part3.checkWorldBounds = true;
         part3.outOfBoundsKill = true;
 		part3.anchor.set(0.5,0.5);
-		part3.visible = true;
 		
 		part4a.body.velocity.x = -200; 
         part4a.checkWorldBounds = true;
         part4a.outOfBoundsKill = true;
 		part4a.anchor.set(0.5,0.5);
-		part4a.visible = true;
 		
 		part4b.body.velocity.x = -200; 
         part4b.checkWorldBounds = true;
         part4b.outOfBoundsKill = true;
 		part4b.anchor.set(0.5,0.5);
-		part4b.visible = true;
 		
 		part4c.body.velocity.x = -200; 
         part4c.checkWorldBounds = true;
         part4c.outOfBoundsKill = true;
 		part4c.anchor.set(0.5,0.5);
-		part4c.visible = true;
 		
 		part4d.body.velocity.x = -200; 
         part4d.checkWorldBounds = true;
         part4d.outOfBoundsKill = true;
 		part4d.anchor.set(0.5,0.5);
-		part4d.visible = true;
 		
 		part5a.body.velocity.x = -200; 
         part5a.checkWorldBounds = true;
         part5a.outOfBoundsKill = true;
 		part5a.anchor.set(0.5,0.5);
-		part5a.visible = true;
 		
 		part5b.body.velocity.x = -200; 
         part5b.checkWorldBounds = true;
         part5b.outOfBoundsKill = true;
 		part5b.anchor.set(0.5,0.5);
-		part5b.visible = true;
 		
 		part5c.body.velocity.x = -200; 
         part5c.checkWorldBounds = true;
         part5c.outOfBoundsKill = true;
 		part5c.anchor.set(0.5,0.5);
-		part5c.visible = true;
 		
 		part5d.body.velocity.x = -200; 
         part5d.checkWorldBounds = true;
         part5d.outOfBoundsKill = true;
 		part5d.anchor.set(0.5,0.5);
-		part5d.visible = true;
 	}
 	
 	function addFloorsOfBuilding() {
@@ -2537,9 +2532,7 @@ var play = function(game){}
 	
 	function addObjects() {		
 		if (gameAlive === true){
-			for (var i=0;i<5;i++){
-				extraPoints.children[i].kill();
-			}
+			//if (score%15 === 0){
 				// Get the first dead points of our group
 				points = extraPoints.getFirstDead();
 				
