@@ -2027,10 +2027,10 @@ var play = function(game){}
 				}
 			}
 			else{
-				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+				if ((building3.x > 0 && building3.x+buildingWidth < player.x) || (building4.x > 0 && building4.x+buildingWidth < player.x) || (building5.x > 0 && building5.x+buildingWidth < player.x) || (building6.x > 0 && building6.x+buildingWidth < player.x)){
 					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
 				}
-				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				else if ((building3.x > 0 && building3.x < player.x) || (building4.x > 0 && building4.x < player.x) || (building5.x > 0 && building5.x < player.x) || (building6.x > 0 && building6.x < player.x)){
 					explosion = game.add.sprite(player.x, player.y - 18, 'explosion');
 				}
 				else{
@@ -2056,10 +2056,10 @@ var play = function(game){}
 				}
 			}
 			else{
-				if (building3.x+buildingWidth < player.x || building4.x+buildingWidth < player.x || building5.x+buildingWidth < player.x || building6.x+buildingWidth < player.x){
+				if ((building3.x > 0 && building3.x+buildingWidth < player.x) || (building4.x > 0 && building4.x+buildingWidth < player.x) || (building5.x > 0 && building5.x+buildingWidth < player.x) || (building6.x > 0 && building6.x+buildingWidth < player.x)){
 					explosion = game.add.sprite(player.x-30, player.y, 'explosion');
 				}
-				else if (building3.x < player.x || building4.x < player.x || building5.x < player.x || building6.x < player.x){
+				else if ((building3.x > 0 && building3.x < player.x) || (building4.x > 0 && building4.x < player.x) || (building5.x > 0 && building5.x < player.x) || (building6.x > 0 && building6.x < player.x)){
 					explosion = game.add.sprite(player.x+10, player.y + 18, 'explosion');
 				}
 				else{
