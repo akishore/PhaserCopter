@@ -14,6 +14,7 @@ var main = function(game){}
 		},
 		create: function() { 
 		company = game.add.sprite(innerWidth/1.1, 240, 'company');
+		company.width = company.width/2;
 		company.anchor.set(0.5,0.5);
 		
 		timer = game.time.events.loop(2000, splashPage, this);
