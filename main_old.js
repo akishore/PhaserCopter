@@ -9,16 +9,18 @@ var main = function(game){}
 			game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 			game.scale.setScreenSize(true);
 			
-			game.load.image("company", "company.png");
 			game.load.image("splash", "splash.png");
 		
 		},
 		create: function() { 
-		company = game.add.sprite(game.width/2, game.height/2, 'company');
-		company.anchor.set(0.5,0.5);
+		splash = game.add.sprite(0, 0, 'splash');
+		splash.width = game.width;
+		splash.height = game.height;
+		//splash.anchor.set(0.5,0.5);
+		// splash.width = window.innerWidth;
 		
-		timer = game.time.events.loop(2000, splashPage, this);
-		
+		game.input.onDown.add(startMenuPage, this);
+		timer = game.time.events.loop(5000, startMenuPage, this);
 		},
 		update: function() {
 			
@@ -28,16 +30,6 @@ var main = function(game){}
 game.state.add("Main",main);
 game.state.start("Main");
 
-function splashPage(){
-	company.alpha = 0;
-	splash1 = game.add.sprite(0, 0, 'splash');
-	splash1.width = game.width;
-	splash1.height = game.height;
-	game.input.onDown.add(startMenuPage, this);
-	setTimeout(function(){
-		startMenuPage()
-	},5000);
-}
 
 function startMenuPage(){
 	game.state.add("Home",home);
