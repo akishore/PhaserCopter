@@ -793,7 +793,7 @@ var play = function(game){}
 	}
 	
 	function resetToNormal(){
-		if (gameAlive){
+		//if (gameAlive){
 			setTimeout(function(){
 				if (reverseLayout == true){
 					killObstacles();
@@ -847,7 +847,7 @@ var play = function(game){}
 				
 
 			},13000);
-		}
+		//}
 	}
 	
 	function gamePause(){
