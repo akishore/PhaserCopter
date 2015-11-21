@@ -682,7 +682,7 @@ var play = function(game){}
 			killObstacles();
 			
 			if (changedPlayerToNormal === false){
-				resizeText = game.add.bitmapText(450, 200, "SFComic", "Player resized to small", 48);
+				resizeText = game.add.bitmapText(450, 200, "SFComic", "Shrink Ball", 48);
 				resizeTextTween = game.add.tween(resizeText).to({ x: 150,y: 200, alpha: 1 }, 500).to({ x: 170 }, 100);
 				resizeTextTween.start();
 				my_media.pause();
